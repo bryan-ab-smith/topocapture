@@ -1,12 +1,41 @@
 #!/usr/bin/python3
+import easyocr
 from flask import Flask, render_template, request
+from numpy.core.numeric import full
+import requests
 from werkzeug.utils import secure_filename
 
-import easyocr
+import json
+import os
 
 app = Flask(__name__)
 
 file_dir = 'static/uploads/'
+
+def getData():
+    '''root_url = 'https://bryanabsmith/topomapper/datafiles/'
+    data_files = [
+        'atsi',
+        'business',
+        'etc',
+        'euexpl',
+        'local',
+        'monarchy',
+        'none',
+        'pol',
+        'religious',
+        'transplants',
+        'war'
+    ]
+
+    odonyms = {}
+
+    for data in data_files:
+        print(requests.get(f'{root_url}{data}.json'))
+    '''
+
+
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def uploadPic():
@@ -35,7 +64,9 @@ def uploadPic():
     full_text = ''
     for x in result:
         full_text += ' ' + x[1]
-    
+
+    os.remove(full_file_name)
+
     fake_names = {
         'Murray': 'Fakey Murray, mayor in 2019.',
         'Flinders': 'Mathew Flinders, explorer',
@@ -58,4 +89,5 @@ def index():
     return render_template('index.html')
 
 if __name__ == "__main__":
+    getData()
     app.run(debug=True)
