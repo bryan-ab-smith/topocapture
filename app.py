@@ -1,19 +1,21 @@
 #!/usr/bin/python3
+from typing import final
 import easyocr
 from flask import Flask, render_template, request
-from numpy.core.numeric import full
 import requests
 from werkzeug.utils import secure_filename
 
-import json
 import os
 
 app = Flask(__name__)
 
 file_dir = 'static/uploads/'
 
+final_odonyms = {}
+
+
 def getData():
-    '''root_url = 'https://bryanabsmith/topomapper/datafiles/'
+    root_url = 'https://bryanabsmith.com/topomapper/datafiles/'
     data_files = [
         'atsi',
         'business',
@@ -30,11 +32,19 @@ def getData():
 
     odonyms = {}
 
-    for data in data_files:
-        print(requests.get(f'{root_url}{data}.json'))
-    '''
+    for theme in data_files:
+        print(f'Adding {theme}...')
+        contents = requests.get(f'{root_url}{theme}.json')
+        to_parse = contents.json()
+        for odonym in to_parse['features']:
+            # print(to_parse['features']['properties']['name'])
+            odonyms[odonym['properties']['name']] = odonym['properties']['description'], odonym['properties']['refs']
 
+    print('Removing duplicates...')
 
+    for key, value in odonyms.items():
+        if value not in final_odonyms:
+            final_odonyms[key] = value
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -67,19 +77,13 @@ def uploadPic():
 
     os.remove(full_file_name)
 
-    fake_names = {
-        'Murray': 'Fakey Murray, mayor in 2019.',
-        'Flinders': 'Mathew Flinders, explorer',
-        'Sturt': 'Another surveyor'
-    }
-
-    for odonym in fake_names:
-        if full_text.lower().find('murray') > 0:
+    for odonym in final_odonyms:
+        if full_text.lower().find(final_odonyms[odonym]) > 0:
             # return f'{odonym} St, named for {fake_names[odonym]}.'
             return f'''<blockquote class="blockquote">
-                <p class="mb-0">{fake_names[odonym]}</p>
+                <p class="mb-0">{final_odonyms[odonym][0]}</p>
                 <br \>
-                <footer class="blockquote-footer">{odonym}</cite></footer>
+                <footer class="blockquote-footer">{final_odonyms[odonym]}</cite></footer>
             </blockquote>'''
     
     return full_text
