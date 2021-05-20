@@ -69,6 +69,7 @@ def uploadPic():
     # Save the uploaded file so that it can be OCR'd
     upload.save(full_file_name)
 
+    # Thanks to Nicholas Renotte for the EasyOCR lines (https://www.youtube.com/watch?v=ZVKaWPW9oQY)
     reader = easyocr.Reader(['en'], gpu=False)
     result = reader.readtext(full_file_name)
     full_text = ''
@@ -78,15 +79,18 @@ def uploadPic():
     os.remove(full_file_name)
 
     for odonym in final_odonyms:
-        if full_text.lower().find(final_odonyms[odonym]) > 0:
+        print(odonym.split(' ')[0].lower() + ' ' + odonym.split(' ')[1][:1].lower())
+        #if full_text.split(' ')[0].lower().find(full_text) > 0:
+        if full_text.lower().find(odonym.split(' ')[0].lower() + ' ' + odonym.split(' ')[1][:1].lower()) > 0:
             # return f'{odonym} St, named for {fake_names[odonym]}.'
             return f'''<blockquote class="blockquote">
+                <h1 class="display-6" style="color: #0dcaf0;">{odonym}</h1>
                 <p class="mb-0">{final_odonyms[odonym][0]}</p>
-                <br \>
-                <footer class="blockquote-footer">{final_odonyms[odonym]}</cite></footer>
+                <p></p>
+                <p><small>{final_odonyms[odonym][1]}</small></p>
             </blockquote>'''
     
-    return full_text
+    return 'Nothing found. Try again with a different picture.'
 
 @app.route('/')
 def index():
@@ -94,4 +98,4 @@ def index():
 
 if __name__ == "__main__":
     getData()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

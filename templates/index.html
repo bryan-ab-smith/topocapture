@@ -10,6 +10,16 @@
 			background-color: black;
 			color: white;
 			margin-top: 20vh;
+
+		}
+
+		#status {
+			margin-left: 10vw;
+			margin-right: 10vw;
+		}
+
+		.small, small {
+			font-size: .6rem;
 		}
 	</style>
 	<script type='text/javascript' src='/static/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
@@ -32,7 +42,7 @@
 						$('#status').html(result)
 					},
 					error: function() {
-						console.log('Error!')
+						$('#status').html('Error getting info. Try again.')
 					}
 				});
 			});
@@ -58,8 +68,8 @@
 			</div>
 		</form>
 	</div>
-	<div id='status' class="d-flex justify-content-center">
-		Click to begin
+	<div id='status' class="d-flex justify-content-center text-center">
+		<h1 class='display-6'>Click to begin</h1>
 	</div>
 </body>
 
