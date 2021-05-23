@@ -21,6 +21,8 @@ As of 22/05/2021, it works albeit slowly unless you tweak the EasyOCR reader in 
 
 Run the test.py script in the test_img/ folder. This will test the OCR against a series of test pictures. Ideally, you get 100% coverage but decide for yourself what an acceptable limit is.
 
+The pictures are purposefully clear/blurry, from day/night, and inclusive of extra text.
+
 ### License
 
 Copyright 2021 Bryan Smith
