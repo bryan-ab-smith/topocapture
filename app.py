@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from typing import final
 import easyocr
 from flask import Flask, render_template, request
 import requests

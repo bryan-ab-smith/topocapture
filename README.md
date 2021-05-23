@@ -2,6 +2,10 @@
 
 More to come, work (very much) in progress.
 
+### Status
+
+As of 22/05/2021, it works albeit slowly unless you tweak the EasyOCR reader in uploadPic() to use a GPU.
+
 ### Development
 
 1. Setup the dependencies:
@@ -13,6 +17,9 @@ More to come, work (very much) in progress.
 
         $ python3 app.py
 
+### Testing
+
+Run the test.py script in the test_img/ folder. This will test the OCR against a series of test pictures. Ideally, you get 100% coverage but decide for yourself what an acceptable limit is.
 
 ### License
 
