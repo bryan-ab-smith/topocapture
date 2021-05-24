@@ -78,6 +78,6 @@ end = default_timer()
 # Print how many were passed
 print(f'Total Passed: {test_count_right}/{test_files}.')
 # Print the passed as a percentage
-print(f'Coverage: {(test_count_right/test_files)*100}.')
+print(f'Coverage: {int((test_count_right/test_files)*100)}%.')
 # Print how long it took to run the tests
 print(f'Time to Run Tests: {round(end-start, 2)} seconds.')
