@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from timeit import default_timer
 import logging
 import os
 
@@ -16,6 +17,7 @@ test_count_right = 0
 
 print(f'Testing OCR. Found {test_files} test files.')
 
+start = default_timer()
 for file in list_files:
     found = False
     name = file.split('.')[0]
@@ -36,6 +38,8 @@ for file in list_files:
     else:
         print('\u2717', name, '                ', end='\r')
     print('')
+end = default_timer()
 
 print(f'Total Passed: {test_count_right}/{test_files}.')
 print(f'Coverage: {(test_count_right/test_files)*100}.')
+print(f'Time to Run Tests: {end-start}')
