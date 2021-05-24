@@ -17,7 +17,7 @@ list_files = os.listdir('.')
 list_files.remove('test.py')
 
 # Sort the list of files
-list_files = list_files.sort()
+list_files.sort()
 
 # Get the number of test pictures
 test_files = len(list_files)
