@@ -5,19 +5,25 @@ import os
 
 import easyocr
 
+# https://stackoverflow.com/questions/27647077/fully-disable-python-logging
+logging.disable(logging.CRITICAL)
+
 list_files = os.listdir('.')
 list_files.remove('test.py')
 
 test_files = len(list_files)
 test_count_right = 0
 
+print(f'Testing OCR. Found {test_files} test files.')
+
 for file in list_files:
     found = False
     name = file.split('.')[0]
     confidence = 0.0
 
-    print(f'Analysing {file}...')
+    print(f'Setting up reader for {file}...         ', end='\r')
     reader = easyocr.Reader(['en'], gpu=False)
+    print(f'Analysing {file}...              ', end='\r')
     result = reader.readtext(file)
 
     for text in result:
@@ -25,10 +31,11 @@ for file in list_files:
             found = True
             confidence = text[2]
     if found == True:
-        print('\u2713', name, '--> Confidence:', confidence)
+        print('\u2713', name, '(Confidence:', str(confidence) + ')                ', end='\r')
         test_count_right += 1
     else:
-        print('\u2717', name)
+        print('\u2717', name, '                ', end='\r')
+    print('')
 
 print(f'Total Passed: {test_count_right}/{test_files}.')
 print(f'Coverage: {(test_count_right/test_files)*100}.')
