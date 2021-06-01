@@ -30,6 +30,9 @@ print(f'Testing OCR. Found {test_files} test files.')
 # Get a start time
 start = default_timer()
 
+# Current picture number
+cur_pic = 1
+
 # For each file in the list...
 for file in list_files:
     # Is the file found? Default to no
@@ -48,7 +51,7 @@ for file in list_files:
     reader = easyocr.Reader(['en'], gpu=False)
 
     # Tell the user that it's analysing the file
-    print(f'Analysing {file}...              ', end='\r')
+    print(f'Analysing {file}, {cur_pic} of {test_files}...              ', end='\r')
 
     # Analyse the file
     result = reader.readtext(file)
@@ -72,6 +75,7 @@ for file in list_files:
         print('\u2717', name, '                ', end='\r')
     # Move to the next line
     print('')
+    cur_pic += 1
 # Get the time after the analyses are done
 end = default_timer()
 
