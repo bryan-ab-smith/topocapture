@@ -78,7 +78,6 @@ def uploadPic():
     os.remove(full_file_name)
 
     for odonym in final_odonyms:
-        print(odonym.split(' ')[0].lower() + ' ' + odonym.split(' ')[1][:1].lower())
         #if full_text.split(' ')[0].lower().find(full_text) > 0:
         if full_text.lower().find(odonym.split(' ')[0].lower() + ' ' + odonym.split(' ')[1][:1].lower()) > 0:
             # return f'{odonym} St, named for {fake_names[odonym]}.'
