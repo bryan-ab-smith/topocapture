@@ -6,6 +6,11 @@ import os
 
 import easyocr
 
+'''
+    TODO:
+    - Incorporate tests for multi_* images.
+'''
+
 # https://stackoverflow.com/questions/27647077/fully-disable-python-logging
 # This disable the default logging that is output by EasyOCR which interferes with the printed messages.
 logging.disable(logging.CRITICAL)
